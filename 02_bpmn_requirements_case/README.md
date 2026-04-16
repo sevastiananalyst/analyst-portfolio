@@ -34,3 +34,14 @@
 - `diagrams/sequence_rosstroikontrol.puml` — UML sequence для Росстройконтроля  
 - `templates/checklist_ks2.md` — чек-лист проверки акта КС-2  
 - `requirements/functional_req.md` — требования к ролям, статусам, уведомлениям
+
+## Диаграммы процессов
+
+### AS-IS (как было — бумага, курьер, email)
+![AS-IS процесс](analyst-portfolio/_assets/BPMN%20As-Is.png)
+
+### TO-BE (как стало — Битрикс24, SLA, API)
+![TO-BE процесс](analyst-portfolio/_assets/BPMN%20To-Be.png)
+
+### Sequence-диаграмма интеграции с Росстройконтролем
+![Sequence Росстройконтроль](analyst-portfolio/_assets/Sequence.png)
