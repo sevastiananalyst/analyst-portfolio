@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: API для приёма лидов из веб-форм
+  description: |
+    Используется в интеграции CRM с сайтом. Лид приходит из формы, 
+    веб-хук создаёт сделку в amoCRM/Битрикс24.
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/crm
+    description: Тестовый сервер
+paths:
+  /webhook/lead:
+    post:
+      summary: Создать лид
+      operationId: createLead
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - phone
+              properties:
+                name:
+                  type: string
+                  example: "Иван Петров"
+                phone:
+                  type: string
+                  example: "+79123456789"
+                email:
+                  type: string
+                  format: email
+                  example: "ivan@example.com"
+                utm_source:
+                  type: string
+                  description: Источник трафика
+                  example: "google_cpc"
+                comment:
+                  type: string
+                  maxLength: 500
+      responses:
+        '200':
+          description: Лид успешно создан
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  lead_id:
+                    type: integer
+                    example: 12345
+                  status:
+                    type: string
+                    example: "created"
+        '400':
+          description: Неверный формат запроса
+        '500':
+          description: Внутренняя ошибка сервера
