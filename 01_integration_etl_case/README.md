@@ -18,7 +18,7 @@
 См. `models/er_diagram_gis.puml`
 
 ### ER-диаграмма базы данных ГИС
-![ER-диаграмма](../_assets/ER.png)
+![ER-диаграмма](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/_assets/ER.png)
 
 ### 2. ETL-процессы
 - Разработан Python-скрипт для извлечения данных из Excel/CSV, очистки (координаты, коды ОКАТО) и загрузки в PostgreSQL
@@ -56,11 +56,9 @@
 
 ## 📂 Ссылки на артефакты (файлы в репозитории)
 
-- **API спецификация (OpenAPI)**: [`api_specs/openapi_gis.yaml`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/api_specs/openapi_gis.yaml)
-- **ER-диаграмма (PlantUML)**: [`models/er_diagram_gis.puml`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/models/er_diagram_gis.puml)
-- **SQL запросы**:
-  - [`sql_etl/advanced_queries.sql`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/sql_etl/advanced_queries.sql)
-  - [`sql_etl/geometry_validation.sql`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/sql_etl/geometry_validation.sql)
+- **API спецификация (OpenAPI)**: [`api_specs/openapi_gis.yaml`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/api_specs/openapi.yaml)
+- **ER-диаграмма (PlantUML)**: [`models/er_diagram_gis.puml`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/models/er_diagram.puml)
+- **SQL запрос**: [`sql_etl/advanced_queries.sql`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/sql_etl/advanced_queries.sql)
 - **Python ETL скрипт**: [`python_etl/etl_gis_load.py`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/python_etl/etl_gis_load.py)
 - **Kafka примеры**:
   - [`kafka_example/producer.py`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/kafka_example/producer.py)
