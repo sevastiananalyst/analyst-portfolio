@@ -50,7 +50,7 @@
 - `models/er_diagram_gis.puml` — ER-диаграмма БД с пространственными расширениями
 - `api_specs/openapi_gis.yaml` — спецификация REST API
 - `sql_etl/geometry_validation.sql` — проверка корректности геометрии
-- `sql_etl/advanced_queries.sql` — сложные запросы (оконные функции, пространственные)
+- `sql_etl/advanced_queries.sql` — сложные запросы (оконные функции)
 - `python_etl/etl_gis_load.py` — ETL-скрипт на Python
 - `kafka_example/` — примеры producer/consumer для событий ГИС
 
