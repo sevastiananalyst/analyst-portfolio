@@ -57,7 +57,7 @@
 ## 📂 Ссылки на артефакты (исходные файлы)
 
 - **API спецификация**: [`api_specs/openapi_gis.yaml`](api_specs/openapi_gis.yaml)
-- **ER-диаграмма**: [`models/er_diagram_gis.puml`](models/er_diagram_gis.puml) (или PNG, если добавили)
+- **ER-диаграмма**: [`models/er_diagram_gis.puml`](models/er_diagram_gis.puml) 
 - **SQL запросы**: 
   - [`sql_etl/advanced_queries.sql`](sql_etl/advanced_queries.sql)
   - [`sql_etl/geometry_validation.sql`](sql_etl/geometry_validation.sql)
