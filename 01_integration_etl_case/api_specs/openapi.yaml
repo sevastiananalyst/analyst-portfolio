@@ -1,60 +1,193 @@
 openapi: 3.0.0
 info:
-  title: API для приёма лидов из веб-форм
+  title: API геоинформационной системы (ГИС)
   description: |
-    Используется в интеграции CRM с сайтом. Лид приходит из формы, 
-    веб-хук создаёт сделку в amoCRM/Битрикс24.
+    Управление пространственными объектами, слоями, поиск по радиусу.
+    Используется в проекте Гортис АТИ для загрузки и выгрузки геоданных.
   version: 1.0.0
 servers:
-  - url: https://api.example.com/crm
+  - url: https://api.gis.gortis.ru/v1
+    description: Продакшн сервер
+  - url: https://test-api.gis.gortis.ru/v1
     description: Тестовый сервер
+
 paths:
-  /webhook/lead:
-    post:
-      summary: Создать лид
-      operationId: createLead
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - name
-                - phone
-              properties:
-                name:
-                  type: string
-                  example: "Иван Петров"
-                phone:
-                  type: string
-                  example: "+79123456789"
-                email:
-                  type: string
-                  format: email
-                  example: "ivan@example.com"
-                utm_source:
-                  type: string
-                  description: Источник трафика
-                  example: "google_cpc"
-                comment:
-                  type: string
-                  maxLength: 500
+  /objects:
+    get:
+      summary: Получить список объектов с пагинацией и фильтром по слою
+      parameters:
+        - name: layer_id
+          in: query
+          schema:
+            type: integer
+          description: ID слоя (если не указан – все слои)
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
       responses:
         '200':
-          description: Лид успешно создан
+          description: Успешный ответ
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  lead_id:
+                  total:
                     type: integer
-                    example: 12345
-                  status:
-                    type: string
-                    example: "created"
-        '400':
-          description: Неверный формат запроса
-        '500':
-          description: Внутренняя ошибка сервера
+                  objects:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SpatialObject'
+    post:
+      summary: Создать новый пространственный объект
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpatialObjectInput'
+      responses:
+        '201':
+          description: Объект создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpatialObject'
+
+  /objects/{id}:
+    get:
+      summary: Получить объект по ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Объект найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpatialObject'
+        '404':
+          description: Объект не найден
+    put:
+      summary: Обновить объект
+      parameters:
+        - name: id
+          in: path
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SpatialObjectInput'
+      responses:
+        '200':
+          description: Обновлено
+    delete:
+      summary: Удалить объект (мягкое удаление)
+      parameters:
+        - name: id
+          in: path
+          required: true
+      responses:
+        '204':
+          description: Удалено
+
+  /search/radius:
+    get:
+      summary: Поиск объектов в заданном радиусе от точки
+      parameters:
+        - name: lon
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+          description: Долгота (EPSG:3857)
+        - name: lat
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+          description: Широта
+        - name: radius_m
+          in: query
+          required: true
+          schema:
+            type: integer
+            default: 500
+          description: Радиус в метрах
+        - name: layer_id
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Список объектов в радиусе
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SpatialObject'
+
+components:
+  schemas:
+    SpatialObject:
+      type: object
+      properties:
+        id:
+          type: integer
+        object_guid:
+          type: string
+          format: uuid
+        layer_id:
+          type: integer
+        geometry_wkt:
+          type: string
+          description: Геометрия в формате WKT (Point, LineString, Polygon)
+        centroid:
+          type: object
+          properties:
+            lon:
+              type: number
+            lat:
+              type: number
+        area_m2:
+          type: number
+        attributes:
+          type: object
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        version:
+          type: integer
+    SpatialObjectInput:
+      type: object
+      required:
+        - layer_id
+        - geometry_wkt
+      properties:
+        layer_id:
+          type: integer
+        geometry_wkt:
+          type: string
+        attributes:
+          type: object
+          additionalProperties: true
