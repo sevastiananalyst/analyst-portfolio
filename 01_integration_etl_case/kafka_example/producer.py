@@ -1,8 +1,3 @@
-"""
-Пример Kafka Producer для ГИС.
-Отправляет события при создании, обновлении или удалении пространственного объекта.
-"""
-
 from kafka import KafkaProducer
 import json
 import uuid
