@@ -1,6 +1,7 @@
 """
 ETL для загрузки геообъектов из Excel/CSV в PostgreSQL+PostGIS.
 Поддерживает преобразование систем координат: WGS84 (4326) -> Web Mercator (3857).
+Трансформер создаётся один раз для производительности.
 """
 
 import pandas as pd
@@ -8,31 +9,30 @@ import psycopg2
 from shapely import wkt
 from shapely.validation import explain_validity
 from shapely.ops import transform
-from functools import partial
 import pyproj
 
 # Константы SRID
 SRID_SOURCE = 4326   # WGS84 (широта/долгота)
 SRID_TARGET = 3857   # Web Mercator (метры)
 
-def validate_and_transform_geometry(geom_wkt: str, source_srid: int = SRID_SOURCE, target_srid: int = SRID_TARGET):
+# Создаём трансформер ОДИН РАЗ (вне функции apply)
+transformer = pyproj.Transformer.from_crs(
+    f"EPSG:{SRID_SOURCE}", f"EPSG:{SRID_TARGET}", 
+    always_xy=True
+)
+
+def validate_and_transform_geometry(geom_wkt: str):
     """
     Проверяет геометрию, преобразует из source_srid в target_srid.
     Возвращает WKT в целевой SRID или None.
     """
     try:
-        # Загружаем геометрию из WKT
         geom = wkt.loads(geom_wkt)
-        
-        # Проверка валидности
         if not geom.is_valid:
             print(f"Invalid geometry: {explain_validity(geom)}")
             return None
-        
-        # Преобразование координат
-        project = pyproj.Transformer.from_crs(f"EPSG:{source_srid}", f"EPSG:{target_srid}", always_xy=True).transform
-        geom_transformed = transform(project, geom)
-        
+        # Используем глобальный трансформер
+        geom_transformed = transform(transformer.transform, geom)
         return geom_transformed.wkt
     except Exception as e:
         print(f"Error processing geometry: {e}")
@@ -42,7 +42,7 @@ def main():
     # 1. Extract
     df = pd.read_excel('gis_objects.xlsx')
     
-    # 2. Transform
+    # 2. Transform (apply использует предсозданный трансформер)
     df['geometry_wkt_target'] = df['wkt'].apply(validate_and_transform_geometry)
     df = df.dropna(subset=['geometry_wkt_target'])
     df = df.drop_duplicates(subset=['external_id'])
@@ -56,7 +56,7 @@ def main():
     )
     cur = conn.cursor()
     
-    # Создание таблицы с пространственным индексом (если не существует)
+    # Создание таблицы с пространственным индексом
     cur.execute("""
         CREATE TABLE IF NOT EXISTS spatial_objects (
             id SERIAL PRIMARY KEY,
@@ -69,7 +69,7 @@ def main():
         CREATE INDEX IF NOT EXISTS idx_geometry ON spatial_objects USING GIST (geometry);
     """)
     
-    # Вставка с преобразованием в PostGIS (можно использовать ST_GeomFromText с указанием SRID)
+    # Вставка с явным указанием SRID
     for _, row in df.iterrows():
         cur.execute("""
             INSERT INTO spatial_objects (external_id, layer_id, geometry, attributes)
