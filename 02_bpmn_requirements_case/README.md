@@ -29,8 +29,8 @@
 - Росстройконтроль получает акты в тот же день (через API) → снижение штрафов
 
 ## Артефакты в папке
-- `diagrams/as_is_docflow_bad.puml` — BPMN хаотичного процесса  
-- `diagrams/to_be_docflow_good.puml` — BPMN с интеграцией, SLA, эскалацией  
+- `diagrams/approval_as_is.puml` — BPMN хаотичного процесса  
+- `diagrams/approval_to_be.puml` — BPMN с интеграцией, SLA, эскалацией  
 - `diagrams/sequence_rosstroikontrol.puml` — UML sequence для Росстройконтроля  
 - `templates/checklist_ks2.md` — чек-лист проверки акта КС-2  
 - `requirements/functional_req.md` — требования к ролям, статусам, уведомлениям
