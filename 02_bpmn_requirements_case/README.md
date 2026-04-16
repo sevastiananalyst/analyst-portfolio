@@ -45,3 +45,16 @@
 
 ### Sequence-диаграмма интеграции с Росстройконтролем
 ![Sequence Росстройконтроль](../_assets/Sequence.png)
+
+## 📂 Ссылки на артефакты
+
+- **BPMN диаграммы (PNG)**:
+  - [AS-IS процесс](../_assets/BPMN_As-Is.png)
+  - [TO-BE процесс](../_assets/BPMN_To-Be.png)
+  - [Sequence Росстройконтроль](../_assets/Sequence.png)
+- **Исходные PlantUML**: [`diagrams/`](diagrams/)
+- **Чек-лист**: [`templates/checklist_ks2.md`](templates/checklist_ks2.md)
+- **Требования**:
+  - [Функциональные требования](requirements/functional_req.md)
+  - [Нефункциональные требования](requirements/nonfunctional_req.md)
+  - [User stories](requirements/user_stories.md)
