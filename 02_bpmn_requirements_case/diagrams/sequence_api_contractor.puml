@@ -1,21 +1,27 @@
 @startuml
 actor "Прораб" as P
 participant "Битрикс24" as B24
-database "PostgreSQL" as DB
-participant "API Генподрядчика" as API
-actor "Генподрядчик" as GC
+participant "API Генподрядчика" as API_GC
+participant "Генподрядчик" as GC
+participant "Единая система Росстройконтроля" as RSK
 
-P -> B24: Загружает акт КС-2
-B24 -> B24: Валидация, создание задачи
-B24 -> DB: Сохранить метаданные (статус = "на согласовании в офисе")
-B24 -> GC: Уведомление (email)
-... офис согласовывает ...
-B24 -> API: POST /api/v1/act/approve
-activate API
-API -> GC: Задача на подпись
-GC -> API: Подписывает ЭЦП
-API --> B24: 200 OK (статус "подписан", URL подписанного файла)
-deactivate API
-B24 -> DB: UPDATE статус = "подписан", дата подписи
-B24 -> P: Уведомление в Telegram
+P -> B24: Загрузить акт КС-2, подписанный генподрядчиком
+B24 -> B24: Проверить, что документ финальный
+B24 -> RSK: POST /api/v1/acceptance_report
+activate RSK
+note right: Передаются: номер акта, дата, объёмы, скан, подписи
+RSK -> RSK: Валидация, регистрация входящего документа
+RSK --> B24: 202 Accepted (регистрационный номер)
+deactivate RSK
+B24 -> P: Уведомление "Акт передан в Росстройконтроль"
+RSK -> RSK: Плановая проверка (до 10 дней)
+alt Нарушения
+    RSK -> B24: POST /webhook/violation (предписание)
+    B24 -> P: Создать задачу "Устранить нарушение"
+    P -> B24: Загрузить акт об устранении
+    B24 -> RSK: Повторная отправка
+else Нет нарушений
+    RSK -> B24: POST /webhook/approved
+    B24 -> P: "Акт принят Росстройконтролем"
+end
 @enduml
