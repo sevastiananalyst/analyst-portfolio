@@ -1,0 +1,38 @@
+@startuml
+!theme plain
+
+entity "spatial_objects" {
+  * id : integer <<PK>>
+  --
+  * object_type : varchar(50)
+  * name : varchar(200)
+  * geometry : geometry(Point/LineString/Polygon)
+  * area : numeric(12,2)
+  * length : numeric(12,2)
+  * created_at : timestamp
+  * updated_at : timestamp
+  * source_file : varchar(255)
+}
+
+entity "attributes" {
+  * id : integer <<PK>>
+  --
+  * object_id : integer <<FK>>
+  * attr_name : varchar(100)
+  * attr_value : text
+  * data_type : varchar(20)
+}
+
+entity "import_log" {
+  * id : integer <<PK>>
+  --
+  * file_name : varchar(255)
+  * imported_at : timestamp
+  * rows_total : integer
+  * rows_loaded : integer
+  * status : varchar(20)
+}
+
+spatial_objects ||--o{ attributes
+spatial_objects }o--|| import_log
+@enduml
