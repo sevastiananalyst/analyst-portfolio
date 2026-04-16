@@ -1,7 +1,6 @@
 @startuml
 actor "Прораб" as P
 participant "Битрикс24" as B24
-participant "API Генподрядчика" as API_GC
 participant "Генподрядчик" as GC
 participant "Единая система Росстройконтроля" as RSK
 
