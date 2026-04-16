@@ -6,7 +6,7 @@
 - **Прораб (Розенберг)** — исполнитель работ  
 - **ПТО (Розенберг)** — проверка смет и актов  
 - **Подрядчик** (субподрядчик) — отдельные виды работ  
-- **Генподрядчик** (Метрострой)  
+- **Генподрядчик** (например, Метрострой)  
 - **Росстройконтроль** — государственный надзор
 
 Проблемы до автоматизации:
@@ -28,33 +28,21 @@
 - Количество ошибок в документации снижено на **40%**  
 - Росстройконтроль получает акты в тот же день (через API) → снижение штрафов
 
-## Артефакты в папке
-- `diagrams/approval_as_is.puml` — BPMN хаотичного процесса  
-- `diagrams/approval_to_be.puml` — BPMN с интеграцией, SLA, эскалацией  
-- `diagrams/sequence_rosstroikontrol.puml` — UML sequence для Росстройконтроля  
-- `templates/checklist_ks2.md` — чек-лист проверки акта КС-2  
-- `requirements/functional_req.md` — требования к ролям, статусам, уведомлениям
-
-## Диаграммы процессов
+## Диаграммы (BPMN, Sequence)
 
 ### AS-IS (как было — бумага, курьер, email)
-![AS-IS процесс](../_assets/BPMN%20As-Is.png)
+![AS-IS](https://raw.githubusercontent.com/sevastiananalyst/analyst-portfolio/main/_assets/BPMN_As-Is.png)
 
 ### TO-BE (как стало — Битрикс24, SLA, API)
-![TO-BE процесс](../_assets/BPMN%20To-Be.png)
+![TO-BE](https://raw.githubusercontent.com/sevastiananalyst/analyst-portfolio/main/_assets/BPMN_To-Be.png)
 
-### Sequence-диаграмма интеграции с Росстройконтролем
-![Sequence Росстройконтроль](../_assets/Sequence.png)
+### Sequence интеграции с Росстройконтролем
+![Sequence](https://raw.githubusercontent.com/sevastiananalyst/analyst-portfolio/main/_assets/Sequence.png)
 
-## 📂 Ссылки на артефакты
+## 📂 Ссылки на артефакты (исходные файлы)
 
-- **BPMN диаграммы (PNG)**:
-  - [AS-IS процесс](../_assets/BPMN_As-Is.png)
-  - [TO-BE процесс](../_assets/BPMN_To-Be.png)
-  - [Sequence Росстройконтроль](../_assets/Sequence.png)
-- **Исходные PlantUML**: [`diagrams/`](diagrams/)
-- **Чек-лист**: [`templates/checklist_ks2.md`](templates/checklist_ks2.md)
-- **Требования**:
-  - [Функциональные требования](requirements/functional_req.md)
-  - [Нефункциональные требования](requirements/nonfunctional_req.md)
-  - [User stories](requirements/user_stories.md)
+- **BPMN исходники (PlantUML)**: [`diagrams/`](https://github.com/sevastiananalyst/analyst-portfolio/tree/main/02_bpmn_requirements_case/diagrams)
+- **Чек-лист для КС-2**: [`templates/checklist_ks2.md`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/02_bpmn_requirements_case/templates/checklist_ks2.md)
+- **Функциональные требования**: [`requirements/functional_req.md`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/02_bpmn_requirements_case/requirements/functional_req.md)
+- **Нефункциональные требования**: [`requirements/nonfunctional_req.md`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/02_bpmn_requirements_case/requirements/nonfunctional_req.md)
+- **User stories**: [`requirements/user_stories.md`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/02_bpmn_requirements_case/requirements/user_stories.md)
