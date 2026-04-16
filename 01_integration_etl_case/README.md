@@ -54,14 +54,14 @@
 - `python_etl/etl_gis_load.py` — ETL-скрипт на Python
 - `kafka_example/` — примеры producer/consumer для событий ГИС
 
-## 📂 Ссылки на артефакты (исходные файлы)
+## 📂 Ссылки на артефакты (файлы в репозитории)
 
-- **API спецификация**: [`api_specs/openapi_gis.yaml`](api_specs/openapi_gis.yaml)
-- **ER-диаграмма**: [`models/er_diagram_gis.puml`](models/er_diagram_gis.puml) 
-- **SQL запросы**: 
-  - [`sql_etl/advanced_queries.sql`](sql_etl/advanced_queries.sql)
-  - [`sql_etl/geometry_validation.sql`](sql_etl/geometry_validation.sql)
-- **Python ETL**: [`python_etl/etl_gis_load.py`](python_etl/etl_gis_load.py)
+- **API спецификация (OpenAPI)**: [`api_specs/openapi_gis.yaml`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/api_specs/openapi_gis.yaml)
+- **ER-диаграмма (PlantUML)**: [`models/er_diagram_gis.puml`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/models/er_diagram_gis.puml)
+- **SQL запросы**:
+  - [`sql_etl/advanced_queries.sql`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/sql_etl/advanced_queries.sql)
+  - [`sql_etl/geometry_validation.sql`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/sql_etl/geometry_validation.sql)
+- **Python ETL скрипт**: [`python_etl/etl_gis_load.py`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/python_etl/etl_gis_load.py)
 - **Kafka примеры**:
-  - [`kafka_example/producer.py`](kafka_example/producer.py)
-  - [`kafka_example/consumer.py`](kafka_example/consumer.py)
+  - [`kafka_example/producer.py`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/kafka_example/producer.py)
+  - [`kafka_example/consumer.py`](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/01_integration_etl_case/kafka_example/consumer.py)
