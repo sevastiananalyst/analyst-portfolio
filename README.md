@@ -40,5 +40,5 @@
 Системный анализ и управление (высшее)
 
 ---
-
+📄 [Развёрнутое резюме (PDF)](https://github.com/sevastiananalyst/analyst-portfolio/blob/main/Резюме_ЦветковСА.pdf)
 *Все артефакты (диаграммы, OpenAPI, SQL-запросы, Python-скрипты) — в соответствующих папках.*
