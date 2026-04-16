@@ -53,3 +53,15 @@
 - `sql_etl/advanced_queries.sql` — сложные запросы (оконные функции, пространственные)
 - `python_etl/etl_gis_load.py` — ETL-скрипт на Python
 - `kafka_example/` — примеры producer/consumer для событий ГИС
+
+## 📂 Ссылки на артефакты (исходные файлы)
+
+- **API спецификация**: [`api_specs/openapi_gis.yaml`](api_specs/openapi_gis.yaml)
+- **ER-диаграмма**: [`models/er_diagram_gis.puml`](models/er_diagram_gis.puml) (или PNG, если добавили)
+- **SQL запросы**: 
+  - [`sql_etl/advanced_queries.sql`](sql_etl/advanced_queries.sql)
+  - [`sql_etl/geometry_validation.sql`](sql_etl/geometry_validation.sql)
+- **Python ETL**: [`python_etl/etl_gis_load.py`](python_etl/etl_gis_load.py)
+- **Kafka примеры**:
+  - [`kafka_example/producer.py`](kafka_example/producer.py)
+  - [`kafka_example/consumer.py`](kafka_example/consumer.py)
