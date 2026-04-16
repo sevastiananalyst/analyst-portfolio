@@ -1,38 +1,89 @@
 @startuml
 !theme plain
 
+' Сущности для геоинформационной системы
+
 entity "spatial_objects" {
-  * id : integer <<PK>>
+  * id : bigint <<PK>>
   --
-  * object_type : varchar(50)
-  * name : varchar(200)
-  * geometry : geometry(Point/LineString/Polygon)
-  * area : numeric(12,2)
-  * length : numeric(12,2)
+  * object_guid : uuid
+  * layer_id : integer <<FK>>
+  * geometry : geometry(Geometry, 3857)  -- PostGIS тип
+  * centroid : geometry(Point, 3857)
+  * area : numeric(15,2)
+  * length : numeric(15,2)
   * created_at : timestamp
   * updated_at : timestamp
-  * source_file : varchar(255)
+  * version : integer
+  * is_deleted : boolean
+}
+
+entity "layers" {
+  * id : integer <<PK>>
+  --
+  * name : varchar(100)
+  * description : text
+  * geometry_type : varchar(20)  -- 'Point', 'LineString', 'Polygon'
+  * srid : integer
+  * min_zoom : integer
+  * max_zoom : integer
+  * owner : varchar(100)
 }
 
 entity "attributes" {
-  * id : integer <<PK>>
+  * id : bigint <<PK>>
   --
-  * object_id : integer <<FK>>
-  * attr_name : varchar(100)
-  * attr_value : text
-  * data_type : varchar(20)
+  * object_id : bigint <<FK>>
+  * attr_def_id : integer <<FK>>
+  * value : text
+  * value_int : integer
+  * value_float : numeric
+  * value_date : date
 }
 
-entity "import_log" {
+entity "attr_definitions" {
   * id : integer <<PK>>
   --
-  * file_name : varchar(255)
-  * imported_at : timestamp
-  * rows_total : integer
-  * rows_loaded : integer
-  * status : varchar(20)
+  * layer_id : integer <<FK>>
+  * name : varchar(100)
+  * data_type : varchar(20)  -- 'string', 'int', 'float', 'date', 'boolean'
+  * is_mandatory : boolean
+  * default_value : text
 }
 
+entity "import_jobs" {
+  * id : bigint <<PK>>
+  --
+  * source_file : varchar(255)
+  * source_type : varchar(20)  -- 'excel', 'csv', 'shapefile', 'postgis'
+  * status : varchar(20)       -- 'pending', 'running', 'completed', 'failed'
+  * total_records : integer
+  * success_records : integer
+  * error_log : text
+  * started_at : timestamp
+  * finished_at : timestamp
+  * created_by : varchar(100)
+}
+
+entity "integration_events" {
+  * id : bigint <<PK>>
+  --
+  * event_type : varchar(50)    -- 'object_created', 'object_updated', 'object_deleted'
+  * object_id : bigint
+  * payload : jsonb
+  * status : varchar(20)        -- 'new', 'sent', 'failed'
+  * kafka_topic : varchar(100)
+  * created_at : timestamp
+  * sent_at : timestamp
+}
+
+' Связи
 spatial_objects ||--o{ attributes
-spatial_objects }o--|| import_log
+attributes }o--|| attr_definitions
+spatial_objects }o--|| layers
+import_jobs ||--o{ spatial_objects : loads
+spatial_objects ||--o{ integration_events : generates
+
+' Индексы для пространственных запросов
+note right of spatial_objects : GIST index on geometry\nBRIN index on created_at
 @enduml
