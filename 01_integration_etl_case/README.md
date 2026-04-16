@@ -18,7 +18,7 @@
 См. `models/er_diagram_gis.puml`
 
 ### ER-диаграмма базы данных ГИС
-![ER-диаграмма](../_assets/er_diagram_gis.png)
+![ER-диаграмма](../_assets/ER.png)
 
 ### 2. ETL-процессы
 - Разработан Python-скрипт для извлечения данных из Excel/CSV, очистки (координаты, коды ОКАТО) и загрузки в PostgreSQL
