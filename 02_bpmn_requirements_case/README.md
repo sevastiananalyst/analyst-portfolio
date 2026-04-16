@@ -38,10 +38,10 @@
 ## Диаграммы процессов
 
 ### AS-IS (как было — бумага, курьер, email)
-![AS-IS процесс](analyst-portfolio/_assets/BPMN%20As-Is.png)
+![AS-IS процесс](../_assets/BPMN%20As-Is.png)
 
 ### TO-BE (как стало — Битрикс24, SLA, API)
-![TO-BE процесс](analyst-portfolio/_assets/BPMN%20To-Be.png)
+![TO-BE процесс](../_assets/BPMN%20To-Be.png)
 
 ### Sequence-диаграмма интеграции с Росстройконтролем
-![Sequence Росстройконтроль](analyst-portfolio/_assets/Sequence.png)
+![Sequence Росстройконтроль](../_assets/Sequence.png)
